@@ -15,7 +15,7 @@ protocol MainViewBusinessLogic: class {
 }
 
 protocol MainViewDataStore: class {
-	var todo: ToDo? { get set }
+	var todo: [ToDo]? { get set }
 }
 
 class MainViewInteractor: MainViewBusinessLogic, MainViewDataStore {
@@ -28,13 +28,14 @@ class MainViewInteractor: MainViewBusinessLogic, MainViewDataStore {
 		self.worker = mainWorker
 	}
 	
-	var todo: ToDo?
+	var todo: [ToDo]?
 	
 	func fetchData() {
 		
 		worker.fetchData { result in
 			switch result {
 			case .success(let todo):
+				self.todo = todo
 				self.presenter?.presentFetchedData(respose: MainModel.FetchData.Response(orders: todo))
 			case .failure(let error):
 				self.presenter?.presentErrorAlert(response: MainModel.ErrorData.Response(error: error))
