@@ -81,7 +81,7 @@ class MainViewController: BaseViewController {
 		let mainWorker = MainWorker(coreDataService: service)
 		let interactor = MainViewInteractor(mainWorker: mainWorker)
 		let presenter = MainViewPresenter()
-		let router = MainRounter()
+		let router = MainRouter()
 		
 		viewController.interactor = interactor
 		viewController.router = router
@@ -107,10 +107,7 @@ class MainViewController: BaseViewController {
 }
 extension MainViewController: MainDisplayLogic {
 	func presentReloadData() {
-		DispatchQueue.main.async {
-			self.tableView.reloadData()
-		}
-		
+		self.interactor?.fetchData()
 	}
 	
 	func displayErrorAlert(viewModel: MainModel.ErrorData.ViewModel) {
