@@ -15,18 +15,18 @@ protocol CoreDataService: class {
 
 class DefaultCoreDataService: CoreDataService {
 	
-	private let provier: PersistentContainerProvider
+	private let provider: PersistentContainerProvider
 	
-	init(provier: PersistentContainerProvider) {
-		self.provier = provier
+	init(provider: PersistentContainerProvider) {
+		self.provider = provider
 		
 		NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave, object: nil, queue: nil) { (notification) in
-			provier.container.viewContext.mergeChanges(fromContextDidSave: notification)
+			provider.container.viewContext.mergeChanges(fromContextDidSave: notification)
 		 }
 	}
 	
 	func fetchData(completion: @escaping (Result<[ToDo], CoreDataError>) -> Void) {
-		let context = provier.container.viewContext
+		let context = provider.container.viewContext
 		
 		context.perform {
 			let fetchRequest: NSFetchRequest = ToDo.fetchRequest()
@@ -43,7 +43,7 @@ class DefaultCoreDataService: CoreDataService {
 	}
 	
 	func addData(title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
-		let container = provier.container
+		let container = provider.container
 		
 		container.performBackgroundTask { context in
 			let newData = ToDo(context: context)
@@ -62,7 +62,7 @@ class DefaultCoreDataService: CoreDataService {
 	
 	func deleteData(index: Int, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
 
-		let container = provier.container
+		let container = provider.container
 		
 		container.performBackgroundTask { context in
 			

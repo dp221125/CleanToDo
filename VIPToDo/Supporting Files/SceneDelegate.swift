@@ -19,7 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(windowScene: windowScene)
 		self.window = window
 		
-		self.window?.rootViewController = UINavigationController(rootViewController: MainViewController())
+		guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else { return }
+		
+		let provider = PersistentContainerProvider(persistentContainer: container)
+		let service: CoreDataService = DefaultCoreDataService(provider: provider)
+		
+		self.window?.rootViewController = UINavigationController(rootViewController: MainViewController(service: service))
 		self.window?.makeKeyAndVisible()
 	}
 
