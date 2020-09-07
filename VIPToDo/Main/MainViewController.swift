@@ -96,7 +96,10 @@ class MainViewController: BaseViewController {
 }
 extension MainViewController: MainDisplayLogic {
 	func presentReloadData() {
-		tableView.reloadData()
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
+		
 	}
 	
 	func displayErrorAlert(viewModel: MainModel.ErrorData.ViewModel) {
@@ -111,7 +114,9 @@ extension MainViewController: MainDisplayLogic {
 	
 	func displayFetchedDatas(viewModel: MainModel.FetchData.ViewModel) {
 		self.displayedDatas = viewModel.displayData
-		tableView.reloadData()
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
 	}
 }
 extension MainViewController: UITableViewDataSource {
