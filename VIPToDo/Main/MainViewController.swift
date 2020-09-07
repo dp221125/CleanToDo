@@ -18,6 +18,7 @@ class MainViewController: BaseViewController {
 	
 	var interactor: MainViewBusinessLogic?
 	
+	var router: (MainRoutingLogic & MainDataPassing)?
 	var displayedDatas: [MainModel.FetchData.ViewModel.DisplayedData] = []
 	
 	init(service: CoreDataService) {
@@ -86,11 +87,14 @@ class MainViewController: BaseViewController {
 		let mainWorker = MainWorker(coreDataService: service)
 		let interactor = MainViewInteractor(mainWorker: mainWorker)
 		let presenter = MainViewPresenter()
+		let router = MainRounter()
 		
 		viewController.interactor = interactor
-		
+		viewController.router = router
 		interactor.presenter = presenter
 		presenter.viewController = viewController
+		router.viewController = viewController
+		router.dataStore = interactor
 	}
 	
 }

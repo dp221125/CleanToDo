@@ -14,11 +14,11 @@ protocol MainViewBusinessLogic: class {
 	func deleteData(index: Int)
 }
 
-protocol MainViewDataStore: class {
+protocol MainDataStore: class {
 	var todo: [ToDo]? { get set }
 }
 
-class MainViewInteractor: MainViewBusinessLogic, MainViewDataStore {
+class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 
 	var presenter: MainViewPresenterLogic?
 	
