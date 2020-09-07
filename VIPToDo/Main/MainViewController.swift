@@ -23,6 +23,9 @@ class MainViewController: BaseViewController {
 	
 	init(service: CoreDataService) {
 		super.init()
+		self.title = "ToDo"
+		self.navigationItem.leftBarButtonItem = self.editButtonItem
+		self.navigationItem.rightBarButtonItem = self.addButtonItem
 		self.setUp(service: service)
 	}
 
@@ -36,22 +39,15 @@ class MainViewController: BaseViewController {
 	
 	let emptyLabel: UILabel = {
 		let label = UILabel()
+		label.text = "To do list is empty."
 		label.font = .boldSystemFont(ofSize: 25)
 		label.textColor = .label
-		label.textColor = .systemGray
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.isHidden = true
 		return label
 	}()
 	
 	let addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
-	
-	override init() {
-		super.init()
-		self.title = "ToDo"
-		self.navigationItem.leftBarButtonItem = self.editButtonItem
-		self.navigationItem.rightBarButtonItem = self.addButtonItem
-	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -126,6 +122,15 @@ extension MainViewController: MainDisplayLogic {
 extension MainViewController: UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		
+		if self.displayedDatas.count == 0 {
+			self.tableView.isHidden = true
+			self.emptyLabel.isHidden = false
+		} else{
+			self.tableView.isHidden = false
+			self.emptyLabel.isHidden = true
+		}
+		
 		return self.displayedDatas.count
 	}
 	
