@@ -115,7 +115,7 @@ extension MainViewController: MainDisplayLogic {
 	
 	func displayErrorAlert(viewModel: MainModel.ErrorData.ViewModel) {
 		let alert = UIAlertController(title: "Error",
-									  message: viewModel.displayData.first?.error.localizedDescription ?? "",
+									  message: viewModel.displayData.error.localizedDescription,
 									  preferredStyle: .alert)
 		
 		let okAction = UIAlertAction(title: "OK", style: .default)

@@ -36,7 +36,7 @@ class MainViewPresenter: MainViewPresenterLogic {
 	
 	func presentErrorAlert(response: MainModel.ErrorData.Response) {
 		
-		let viewModel = MainModel.ErrorData.ViewModel(displayData: [MainModel.ErrorData.ViewModel.DisplayedError(error: response.error)])
+		let viewModel = MainModel.ErrorData.ViewModel(displayData: MainModel.ErrorData.ViewModel.DisplayedError(error: response.error))
 		viewController?.displayErrorAlert(viewModel: viewModel)
 		
 	}

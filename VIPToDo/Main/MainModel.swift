@@ -38,7 +38,7 @@ enum MainModel {
 				var error: CoreDataError
 			}
 			
-			var displayData = [DisplayedError]()
+			var displayData: DisplayedError
 		}
 	}
 }
