@@ -24,6 +24,12 @@
 		C3C87C8525065C9A00A33DE3 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8425065C9A00A33DE3 /* MainViewPresenter.swift */; };
 		C3C87C8725066AE600A33DE3 /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8625066AE600A33DE3 /* MainWorker.swift */; };
 		C3C87C8B2506788A00A33DE3 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8A2506788A00A33DE3 /* MainRouter.swift */; };
+		C3C87C93250687F000A33DE3 /* EditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8D250687F000A33DE3 /* EditPresenter.swift */; };
+		C3C87C94250687F000A33DE3 /* EditWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8E250687F000A33DE3 /* EditWorker.swift */; };
+		C3C87C95250687F000A33DE3 /* EditRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C8F250687F000A33DE3 /* EditRouter.swift */; };
+		C3C87C96250687F000A33DE3 /* EditModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C90250687F000A33DE3 /* EditModels.swift */; };
+		C3C87C97250687F000A33DE3 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C91250687F000A33DE3 /* EditViewController.swift */; };
+		C3C87C98250687F000A33DE3 /* EditInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C87C92250687F000A33DE3 /* EditInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +52,12 @@
 		C3C87C8425065C9A00A33DE3 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		C3C87C8625066AE600A33DE3 /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
 		C3C87C8A2506788A00A33DE3 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		C3C87C8D250687F000A33DE3 /* EditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPresenter.swift; sourceTree = "<group>"; };
+		C3C87C8E250687F000A33DE3 /* EditWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorker.swift; sourceTree = "<group>"; };
+		C3C87C8F250687F000A33DE3 /* EditRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouter.swift; sourceTree = "<group>"; };
+		C3C87C90250687F000A33DE3 /* EditModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModels.swift; sourceTree = "<group>"; };
+		C3C87C91250687F000A33DE3 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		C3C87C92250687F000A33DE3 /* EditInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +90,7 @@
 		C3C87C5A2503C40400A33DE3 /* VIPToDo */ = {
 			isa = PBXGroup;
 			children = (
+				C3C87C8C2506879600A33DE3 /* Edit */,
 				C3C87C892506715F00A33DE3 /* CoreData */,
 				C3C87C882506715000A33DE3 /* Main */,
 				C3C87C7F2506593B00A33DE3 /* Common */,
@@ -130,6 +143,19 @@
 				C3C87C7D250658D200A33DE3 /* PersistentContainerProvider.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		C3C87C8C2506879600A33DE3 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				C3C87C8D250687F000A33DE3 /* EditPresenter.swift */,
+				C3C87C8E250687F000A33DE3 /* EditWorker.swift */,
+				C3C87C8F250687F000A33DE3 /* EditRouter.swift */,
+				C3C87C90250687F000A33DE3 /* EditModels.swift */,
+				C3C87C91250687F000A33DE3 /* EditViewController.swift */,
+				C3C87C92250687F000A33DE3 /* EditInteractor.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,11 +228,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3C87C97250687F000A33DE3 /* EditViewController.swift in Sources */,
 				C3C87C742506490900A33DE3 /* BaseViewController.swift in Sources */,
 				C3C87C602503C40400A33DE3 /* MainViewController.swift in Sources */,
 				C3C87C7625064AAA00A33DE3 /* MainTableViewCell.swift in Sources */,
 				C3C87C662503C40400A33DE3 /* VIPToDo.xcdatamodeld in Sources */,
 				C3C87C7A250650B800A33DE3 /* CoreDataService.swift in Sources */,
+				C3C87C98250687F000A33DE3 /* EditInteractor.swift in Sources */,
+				C3C87C96250687F000A33DE3 /* EditModels.swift in Sources */,
+				C3C87C94250687F000A33DE3 /* EditWorker.swift in Sources */,
 				C3C87C8B2506788A00A33DE3 /* MainRouter.swift in Sources */,
 				C3C87C7C250658BC00A33DE3 /* CoreDataError.swift in Sources */,
 				C3C87C7825064AB200A33DE3 /* BaseTableViewCell.swift in Sources */,
@@ -214,8 +244,10 @@
 				C3C87C8525065C9A00A33DE3 /* MainViewPresenter.swift in Sources */,
 				C3C87C7E250658D200A33DE3 /* PersistentContainerProvider.swift in Sources */,
 				C3C87C5C2503C40400A33DE3 /* AppDelegate.swift in Sources */,
+				C3C87C93250687F000A33DE3 /* EditPresenter.swift in Sources */,
 				C3C87C5E2503C40400A33DE3 /* SceneDelegate.swift in Sources */,
 				C3C87C8725066AE600A33DE3 /* MainWorker.swift in Sources */,
+				C3C87C95250687F000A33DE3 /* EditRouter.swift in Sources */,
 				C3C87C8325065BDB00A33DE3 /* MainModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,7 +21,26 @@ class MainRounter: MainRoutingLogic, MainDataPassing {
 	weak var viewController: MainViewController?
 	var dataStore: MainDataStore?
 	
-	func routeToDetail() { }
+	func routeToDetail() {
+		
+		let nextViewController: EditViewController = EditViewController()
+		var nextDataSource = nextViewController.router!.dataStore!
+		
+		passDataToEdit(source: dataStore!, destination: &nextDataSource)
+		navigateToEdit(source: viewController!, destination: nextViewController)
+	}
+	
+	func passDataToEdit(source: MainDataStore, destination: inout EditDataStore) {
+		
+		if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
+			destination.defaultText = source.todo?[selectedRow].title
+		}
+		
+	}
+	
+	func navigateToEdit(source: MainViewController, destination: EditViewController) {
+		source.navigationController?.pushViewController(destination, animated: true)
+	}
 	
 	
 }
