@@ -99,8 +99,7 @@ class MainViewController: BaseViewController {
 	}
 	
 	@objc
-	func moveToEdit() {
-		print("RUN")
+	private func moveToEdit() {
 		self.router?.routeToDetail()
 	}
 	
