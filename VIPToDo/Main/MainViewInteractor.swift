@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MainViewBusinessLogic: class {
-	func fetchData()
+	func fetchData(request: MainModel.FetchData.Request)
 	func addData(title: String)
 	func deleteData(index: Int)
 }
@@ -30,7 +30,7 @@ class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 	
 	var todo: [ToDo]?
 	
-	func fetchData() {
+	func fetchData(request: MainModel.FetchData.Request) {
 		
 		worker.fetchData { result in
 			switch result {

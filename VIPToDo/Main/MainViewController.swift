@@ -95,7 +95,7 @@ class MainViewController: BaseViewController {
 		super.viewDidLoad()
 		self.navigationItem.leftBarButtonItem = self.editButtonItem
 		self.navigationItem.rightBarButtonItem = self.addButtonItem
-		self.interactor?.fetchData()
+		requestFetchData()
 	}
 	
 	@objc
@@ -104,10 +104,15 @@ class MainViewController: BaseViewController {
 		self.router?.routeToDetail()
 	}
 	
+	private func requestFetchData() {
+		let request = MainModel.FetchData.Request()
+		self.interactor?.fetchData(request: request)
+	}
+	
 }
 extension MainViewController: MainDisplayLogic {
 	func presentReloadData() {
-		self.interactor?.fetchData()
+		requestFetchData()
 	}
 	
 	func displayErrorAlert(viewModel: MainModel.ErrorData.ViewModel) {
