@@ -16,10 +16,12 @@ protocol MainViewBusinessLogic: class {
 
 protocol MainDataStore: class {
 	var todo: [ToDo]? { get set }
+	var service: CoreDataService? { get set }
 }
 
 class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
-
+	
+	var service: CoreDataService?
 	var presenter: MainViewPresenterLogic?
 	
 	let worker: MainWorker

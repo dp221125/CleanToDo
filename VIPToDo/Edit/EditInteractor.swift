@@ -18,11 +18,21 @@ protocol EditBusinessLogic {
 
 protocol EditDataStore {
 	var defaultText: String? { get set }
+	var service: CoreDataService? { get set }
 }
 
 class EditInteractor: EditBusinessLogic, EditDataStore {
 
 	var defaultText: String?
+	var service: CoreDataService? {
+		didSet {
+			guard let service = self.service else {
+				preconditionFailure()
+			}
+			
+			self.worker = EditWorker(service: service)
+		}
+	}
 	
 	var presenter: EditPresentationLogic?
 	var worker: EditWorker?

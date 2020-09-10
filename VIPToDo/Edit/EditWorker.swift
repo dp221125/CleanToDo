@@ -13,5 +13,10 @@
 import UIKit
 
 class EditWorker {
+	
+	let service: CoreDataService
 
+	init(service: CoreDataService) {
+		self.service = service
+	}
 }

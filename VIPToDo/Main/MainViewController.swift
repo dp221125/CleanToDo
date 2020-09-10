@@ -86,6 +86,7 @@ class MainViewController: BaseViewController {
 		viewController.interactor = interactor
 		viewController.router = router
 		interactor.presenter = presenter
+		interactor.service = service
 		presenter.viewController = viewController
 		router.viewController = viewController
 		router.dataStore = interactor
