@@ -27,8 +27,7 @@ class MainTableViewCell: BaseTableViewCell {
 	override func setupConstraints() {
 		NSLayoutConstraint.activate([
 			titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-			titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-			titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
+			titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
 		])
 	}
 	

@@ -11,7 +11,7 @@ import UIKit
 protocol MainViewPresenterLogic {
 	func presentFetchedData(respose: MainModel.FetchData.Response)
 	func presentErrorAlert(response: MainModel.ErrorData.Response)
-	func presentReloadData()
+	func presentReloadData(response: MainModel.EditData.Response)
 	func presentEditState(response: MainModel.EditState.Response)
 }
 
@@ -21,17 +21,21 @@ class MainViewPresenter: MainViewPresenterLogic {
 	
 	func presentFetchedData(respose: MainModel.FetchData.Response) {
 		
-		var displayDatas: [MainModel.FetchData.ViewModel.DisplayedData] = []
+		
+		var todoTItle = [String]()
 		
 		for displayData in respose.orders {
 			if let title = displayData.title {
-				let displayData = MainModel.FetchData.ViewModel.DisplayedData(title: title)
-				displayDatas.append(displayData)
+//				let displayData = MainModel.FetchData.ViewModel.DisplayedData(title: title)
+//				displayDatas.append(displayData)
+				todoTItle.append(title)
 			}
 			
 		}
 		
-		let viewModel = MainModel.FetchData.ViewModel(displayData: displayDatas)
+		
+		let displayData = MainModel.FetchData.ViewModel.DisplayedData(title: todoTItle, index: respose.index)
+		let viewModel = MainModel.FetchData.ViewModel(displayData: displayData)
 		viewController?.displayFetchedDatas(viewModel: viewModel)
 	}
 	
@@ -42,13 +46,14 @@ class MainViewPresenter: MainViewPresenterLogic {
 		
 	}
 	
-	func presentReloadData() {
-		viewController?.presentReloadData()
+	func presentReloadData(response: MainModel.EditData.Response) {
+		let viewModel = MainModel.EditData.ViewModel(displayEdit: MainModel.EditData.ViewModel.DisplayedEdit(index: response.index))
+		viewController?.presentReloadData(viewModel: viewModel)
 	}
 	
 	func presentEditState(response: MainModel.EditState.Response) {
 		
-		let viewModel = MainModel.EditState.ViewModel(displayEdit: MainModel.EditState.ViewModel.DisplayedEdit(isEdit: response.newEditState))
+		let viewModel = MainModel.EditState.ViewModel(displayEdit: MainModel.EditState.ViewModel.DisplayedEditState(isEdit: response.newEditState))
 		viewController?.changeTableViewEditState(viewModel: viewModel)
 	}
 	

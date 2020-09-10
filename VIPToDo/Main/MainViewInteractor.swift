@@ -10,7 +10,7 @@ import Foundation
 
 protocol MainViewBusinessLogic: class {
 	func fetchData(request: MainModel.FetchData.Request)
-	func deleteData(index: Int)
+	func deleteData(request: MainModel.EditData.Request)
 	func changeEditState(request: MainModel.EditState.Request)
 }
 
@@ -38,7 +38,7 @@ class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 			switch result {
 			case .success(let todo):
 				self.todo = todo
-				self.presenter?.presentFetchedData(respose: MainModel.FetchData.Response(orders: todo))
+				self.presenter?.presentFetchedData(respose: MainModel.FetchData.Response(index: request.index, orders: todo))
 			case .failure(let error):
 				self.presenter?.presentErrorAlert(response: MainModel.ErrorData.Response(error: error))
 			}
@@ -46,12 +46,12 @@ class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 		
 	}
 	
-	func deleteData(index: Int) {
+	func deleteData(request: MainModel.EditData.Request) {
 		
-		worker.deleteData(index: index) { result in
+		worker.deleteData(index: request.index) { result in
 			switch result {
 			case .success:
-				self.presenter?.presentReloadData()
+				self.presenter?.presentReloadData(response: MainModel.EditData.Response(index: request.index))
 			case .failure(let error):
 				self.presenter?.presentErrorAlert(response: MainModel.ErrorData.Response(error: error))
 			}

@@ -11,18 +11,23 @@ import UIKit
 enum MainModel {
 	
 	enum FetchData  {
-		struct Request { }
+		struct Request {
+			var index: Int?
+		}
 		
 		struct Response {
+			var index: Int?
 			var orders: [ToDo]
 		}
 		
 		struct ViewModel {
 			struct DisplayedData {
-				var title: String
+				var title: [String]
+				var index: Int?
 			}
 			
-			var displayData = [DisplayedData]()
+			var displayData: DisplayedData
+//			var displayData = [DisplayedData]()
 		}
 	}
 	
@@ -53,8 +58,28 @@ enum MainModel {
 		
 		struct ViewModel {
 			
-			struct DisplayedEdit {
+			struct DisplayedEditState {
 				var isEdit: Bool
+			}
+			
+			var displayEdit: DisplayedEditState
+			
+		}
+	}
+	
+	enum EditData {
+		struct Request {
+			var index: Int
+		}
+		
+		struct Response {
+			var index: Int
+		}
+		
+		struct ViewModel {
+			
+			struct DisplayedEdit {
+				var index: Int
 			}
 			
 			var displayEdit: DisplayedEdit
