@@ -19,4 +19,15 @@ class EditWorker {
 	init(service: CoreDataService) {
 		self.service = service
 	}
+	
+	func addData(title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
+		self.service.addData(title: title) { result in
+			switch result {
+			case .success(let void):
+				completion(.success(void))
+			case .failure(let error):
+				completion(.failure(error))
+			}
+		}
+	}
 }

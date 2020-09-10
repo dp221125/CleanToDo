@@ -32,4 +32,29 @@ enum Edit {
 		}
 	}
 	
+	enum ErrorData {
+		struct Request { }
+			
+		struct Response {
+			var error: CoreDataError
+		}
+		
+		struct ViewModel {
+			struct DisplayedError {
+				var error: CoreDataError
+			}
+			
+			var displayData: DisplayedError
+		}
+	}
+	
+	
+	enum Add {
+		struct Request {
+			var title: String
+		}
+		struct Response { }
+		struct ViewModel { }
+	}
+	
 }

@@ -14,16 +14,20 @@ import UIKit
 
 protocol EditDisplayLogic: class {
 	func displayTitle(viewModel: Edit.GetTitle.ViewModel)
+	func displayErrorAlert(viewModel: Edit.ErrorData.ViewModel)
+	func displayDismiss(viewModel: Edit.Add.ViewModel)
 }
 
 class EditViewController: BaseViewController {
+	
+	weak var delegate: AddDelegate?
 	
 	var interactor: EditBusinessLogic?
 	var router: (NSObjectProtocol & EditRoutingLogic & EditDataPassing)?
 	
 	var defaultText: String?
 	
-	let doneButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+	lazy var doneButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addToDo))
 	
 	lazy var titleInput: UITextField = {
 		let textField = UITextField()
@@ -83,10 +87,31 @@ class EditViewController: BaseViewController {
 		router.dataStore = interactor
 	}
 	
+	@objc
+	func addToDo() {
+		if let title = self.titleInput.text {
+			let request = Edit.Add.Request(title: title)
+			self.interactor?.addData(request: request)
+		}
+	}
 	
 }
 extension EditViewController: EditDisplayLogic {
 	
+	func displayErrorAlert(viewModel: Edit.ErrorData.ViewModel) {
+		let alert = UIAlertController(title: "Error",
+									  message: viewModel.displayData.error.localizedDescription,
+									  preferredStyle: .alert)
+		
+		let okAction = UIAlertAction(title: "OK", style: .default)
+		alert.addAction(okAction)
+		self.present(alert, animated: true)
+	}
+	
+	func displayDismiss(viewModel: Edit.Add.ViewModel) {
+		self.router?.routeToMain()
+	}
+
 	func displayTitle(viewModel: Edit.GetTitle.ViewModel) {
 		
 		if let title = viewModel.disPlayTitle.title {

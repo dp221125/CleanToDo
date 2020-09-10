@@ -10,8 +10,8 @@ import Foundation
 
 protocol MainViewBusinessLogic: class {
 	func fetchData(request: MainModel.FetchData.Request)
-	func addData(title: String)
 	func deleteData(index: Int)
+	func changeEditState(request: MainModel.EditState.Request)
 }
 
 protocol MainDataStore: class {
@@ -20,7 +20,7 @@ protocol MainDataStore: class {
 }
 
 class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
-	
+		
 	var service: CoreDataService?
 	var presenter: MainViewPresenterLogic?
 	
@@ -46,19 +46,6 @@ class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 		
 	}
 	
-	func addData(title: String) {
-		
-		worker.addData(title: title) { result in
-			switch result {
-			case .success:
-				self.presenter?.presentReloadData()
-			case .failure(let error):
-				self.presenter?.presentErrorAlert(response: MainModel.ErrorData.Response(error: error))
-			}
-		}
-		
-	}
-	
 	func deleteData(index: Int) {
 		
 		worker.deleteData(index: index) { result in
@@ -70,5 +57,9 @@ class MainViewInteractor: MainViewBusinessLogic, MainDataStore {
 			}
 		}
 		
+	}
+	
+	func changeEditState(request: MainModel.EditState.Request) {
+		self.presenter?.presentEditState(response: MainModel.EditState.Response(newEditState: !request.currentEditState))
 	}
 }

@@ -14,6 +14,7 @@ import UIKit
 
 protocol EditBusinessLogic {
 	func showTitle()
+	func addData(request: Edit.Add.Request)
 }
 
 protocol EditDataStore {
@@ -42,5 +43,20 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 		let response = Edit.GetTitle.Response(title: defaultText)
 		presenter?.presentTitle(response: response)
 	}
+	
+	
+	func addData(request: Edit.Add.Request) {
+		
+		worker?.addData(title: request.title) { result in
+			switch result {
+			case .success:
+				self.presenter?.presentDismiss(response: Edit.Add.Response())
+			case .failure(let error):
+				self.presenter?.presentErrorAlert(response: Edit.ErrorData.Response(error: error))
+			}
+		}
+		
+	}
+	
 	
 }

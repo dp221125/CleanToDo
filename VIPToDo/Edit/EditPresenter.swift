@@ -14,6 +14,8 @@ import UIKit
 
 protocol EditPresentationLogic {
 	func presentTitle(response: Edit.GetTitle.Response)
+	func presentErrorAlert(response: Edit.ErrorData.Response)
+	func presentDismiss(response: Edit.Add.Response)
 }
 
 class EditPresenter: EditPresentationLogic {
@@ -25,5 +27,17 @@ class EditPresenter: EditPresentationLogic {
 		let viewModel = Edit.GetTitle.ViewModel(disPlayTitle: Edit.GetTitle.ViewModel.DisPlayTitle(title: response.title))
 		viewController?.displayTitle(viewModel: viewModel)
 		
+	}
+	
+	func presentErrorAlert(response: Edit.ErrorData.Response) {
+		
+		let viewModel = Edit.ErrorData.ViewModel(displayData: Edit.ErrorData.ViewModel.DisplayedError(error: response.error))
+		viewController?.displayErrorAlert(viewModel: viewModel)
+	}
+	
+	func presentDismiss(response: Edit.Add.Response) {
+		
+		let viewModel = Edit.Add.ViewModel()
+		viewController?.displayDismiss(viewModel: viewModel)
 	}
 }

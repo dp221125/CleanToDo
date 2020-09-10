@@ -26,18 +26,7 @@ class MainWorker {
 			}
 		}
 	}
-	
-	func addData(title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
-		self.coreDataService.addData(title: title) { result in
-			switch result {
-			case .success(let void):
-				completion(.success(void))
-			case .failure(let error):
-				completion(.failure(error))
-			}
-		}
-	}
-	
+		
 	func deleteData(index: Int, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
 		self.coreDataService.deleteData(index: index) { result in
 			switch result {

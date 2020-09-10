@@ -12,6 +12,7 @@ protocol MainDisplayLogic: class {
 	func displayFetchedDatas(viewModel: MainModel.FetchData.ViewModel)
 	func displayErrorAlert(viewModel: MainModel.ErrorData.ViewModel)
 	func presentReloadData()
+	func changeTableViewEditState(viewModel: MainModel.EditState.ViewModel)
 }
 
 class MainViewController: BaseViewController {
@@ -32,6 +33,7 @@ class MainViewController: BaseViewController {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "\(MainTableViewCell.self)")
 		tableView.dataSource = self
+		tableView.delegate = self
 		return tableView
 	}()
 	
@@ -46,6 +48,8 @@ class MainViewController: BaseViewController {
 	}()
 	
 	lazy var addButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(moveToEdit))
+	
+	lazy var editButtonItems = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editTableView))
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -94,23 +98,35 @@ class MainViewController: BaseViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.navigationItem.leftBarButtonItem = self.editButtonItem
+		self.navigationItem.leftBarButtonItem = self.editButtonItems
 		self.navigationItem.rightBarButtonItem = self.addButtonItem
 		requestFetchData()
-	}
-	
-	@objc
-	private func moveToEdit() {
-		self.router?.routeToDetail()
 	}
 	
 	private func requestFetchData() {
 		let request = MainModel.FetchData.Request()
 		self.interactor?.fetchData(request: request)
 	}
+
+	@objc
+	private func moveToEdit() {
+		self.router?.routeToDetail()
+	}
+	
+	@objc
+	private func editTableView() {
+		let request = MainModel.EditState.Request(currentEditState: self.tableView.isEditing)
+		self.interactor?.changeEditState(request: request)
+	}
 	
 }
 extension MainViewController: MainDisplayLogic {
+	func changeTableViewEditState(viewModel: MainModel.EditState.ViewModel) {
+		self.tableView.setEditing(viewModel.displayEdit.isEdit, animated: true)
+        self.navigationItem.leftBarButtonItem?.title = viewModel.displayEdit.isEdit ? "Done" : "Edit"
+        self.navigationItem.leftBarButtonItem?.style = viewModel.displayEdit.isEdit ? .done : .plain
+	}
+	
 	func presentReloadData() {
 		requestFetchData()
 	}
@@ -154,5 +170,21 @@ extension MainViewController: UITableViewDataSource {
 		return cell
 	}
 	
+}
+extension MainViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		self.router?.routeToDetail()
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
 	
+
+}
+extension MainViewController: AddDelegate {
+	func refresh() {
+		self.requestFetchData()
+	}
+}
+
+protocol AddDelegate: class {
+	func refresh()
 }

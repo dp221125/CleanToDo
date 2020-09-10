@@ -13,15 +13,27 @@
 import UIKit
 
 @objc protocol EditRoutingLogic {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+	func routeToMain()
 }
 
 protocol EditDataPassing {
-  var dataStore: EditDataStore? { get }
+	var dataStore: EditDataStore? { get }
 }
 
 class EditRouter: NSObject, EditRoutingLogic, EditDataPassing {
-  weak var viewController: EditViewController?
-  var dataStore: EditDataStore?
 
+	
+	weak var viewController: EditViewController?
+	var dataStore: EditDataStore?
+	
+	
+	func routeToMain() {
+			
+		DispatchQueue.main.async {
+			self.viewController?.dismiss(animated: true) { [weak self] in
+				self?.viewController?.delegate?.refresh()
+			}
+		}
+		
+	}
 }

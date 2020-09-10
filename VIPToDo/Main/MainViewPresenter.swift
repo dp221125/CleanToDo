@@ -12,10 +12,11 @@ protocol MainViewPresenterLogic {
 	func presentFetchedData(respose: MainModel.FetchData.Response)
 	func presentErrorAlert(response: MainModel.ErrorData.Response)
 	func presentReloadData()
+	func presentEditState(response: MainModel.EditState.Response)
 }
 
 class MainViewPresenter: MainViewPresenterLogic {
-	
+
 	weak var viewController: MainDisplayLogic?
 	
 	func presentFetchedData(respose: MainModel.FetchData.Response) {
@@ -43,6 +44,12 @@ class MainViewPresenter: MainViewPresenterLogic {
 	
 	func presentReloadData() {
 		viewController?.presentReloadData()
+	}
+	
+	func presentEditState(response: MainModel.EditState.Response) {
+		
+		let viewModel = MainModel.EditState.ViewModel(displayEdit: MainModel.EditState.ViewModel.DisplayedEdit(isEdit: response.newEditState))
+		viewController?.changeTableViewEditState(viewModel: viewModel)
 	}
 	
 

@@ -24,6 +24,7 @@ class MainRouter: MainRoutingLogic, MainDataPassing {
 	func routeToDetail() {
 		
 		let nextViewController: EditViewController = EditViewController()
+		nextViewController.delegate = viewController
 		var nextDataSource = nextViewController.router!.dataStore!
 		
 		passDataToEdit(source: dataStore!, destination: &nextDataSource)
@@ -42,7 +43,8 @@ class MainRouter: MainRoutingLogic, MainDataPassing {
 	}
 	
 	func navigateToEdit(source: MainViewController, destination: EditViewController) {
-		source.navigationController?.pushViewController(destination, animated: true)
+
+		source.present(UINavigationController(rootViewController: destination), animated: true)
 	}
 	
 	
