@@ -32,9 +32,11 @@ class MainRouter: MainRoutingLogic, MainDataPassing {
 	
 	func passDataToEdit(source: MainDataStore, destination: inout EditDataStore) {
 		
+		destination.service = source.service
+		
 		if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
 			destination.defaultText = source.todo?[selectedRow].title
-			destination.service = source.service
+			
 		}
 		
 	}
