@@ -37,6 +37,7 @@ class MainRouter: MainRoutingLogic, MainDataPassing {
 		
 		if let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row {
 			destination.defaultText = source.todo?[selectedRow].title
+			destination.selectedIndex = selectedRow
 			
 		}
 		

@@ -25,8 +25,6 @@ class EditViewController: BaseViewController {
 	var interactor: EditBusinessLogic?
 	var router: (NSObjectProtocol & EditRoutingLogic & EditDataPassing)?
 	
-	var defaultText: String?
-	
 	lazy var doneButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addToDo))
 	
 	lazy var titleInput: UITextField = {
@@ -38,7 +36,6 @@ class EditViewController: BaseViewController {
 		textField.textColor = .label
 		textField.layer.borderColor = UIColor.black.cgColor
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.text = self.defaultText
 		return textField
 	}()
 	
@@ -91,7 +88,7 @@ class EditViewController: BaseViewController {
 	func addToDo() {
 		if let title = self.titleInput.text {
 			let request = Edit.Add.Request(title: title)
-			self.interactor?.addData(request: request)
+			self.interactor?.update(request: request)
 		}
 	}
 	

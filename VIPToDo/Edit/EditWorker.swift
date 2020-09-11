@@ -30,4 +30,17 @@ class EditWorker {
 			}
 		}
 	}
+	
+	
+	func updateData(index: Int, title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
+		self.service.updateData(index: index, title: title) { result in
+			switch result {
+			case .success(let void):
+				completion(.success(void))
+			case .failure(let error):
+				completion(.failure(error))
+			}
+		}
+		
+	}
 }

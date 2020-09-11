@@ -162,9 +162,11 @@ extension MainViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		
 		if self.displayedDatas.count == 0 {
+			self.navigationItem.leftBarButtonItem = nil
 			self.tableView.isHidden = true
 			self.emptyLabel.isHidden = false
 		} else{
+			self.navigationItem.leftBarButtonItem = self.editButtonItems
 			self.tableView.isHidden = false
 			self.emptyLabel.isHidden = true
 		}

@@ -14,17 +14,20 @@ import UIKit
 
 protocol EditBusinessLogic {
 	func showTitle()
-	func addData(request: Edit.Add.Request)
+	func update(request: Edit.Add.Request)
 }
 
 protocol EditDataStore {
 	var defaultText: String? { get set }
+	var selectedIndex: Int? { get set }
 	var service: CoreDataService? { get set }
 }
 
 class EditInteractor: EditBusinessLogic, EditDataStore {
-
+	
 	var defaultText: String?
+	var selectedIndex: Int?
+	
 	var service: CoreDataService? {
 		didSet {
 			guard let service = self.service else {
@@ -44,6 +47,28 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 		presenter?.presentTitle(response: response)
 	}
 	
+	
+	func update(request: Edit.Add.Request) {
+		
+		if let index = self.selectedIndex {
+			self.updateData(index: index, request: request)
+		} else {
+			self.addData(request: request)
+		}
+	}
+	
+	func updateData(index: Int, request: Edit.Add.Request) {
+		
+		worker?.updateData(index: index, title: request.title) { result in
+			switch result {
+			case .success:
+				self.presenter?.presentDismiss(response: Edit.Add.Response())
+			case .failure(let error):
+				self.presenter?.presentErrorAlert(response: Edit.ErrorData.Response(error: error))
+			}
+		}
+		
+	}
 	
 	func addData(request: Edit.Add.Request) {
 		

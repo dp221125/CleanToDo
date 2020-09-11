@@ -11,6 +11,7 @@ protocol CoreDataService: class {
 	func fetchData(completion: @escaping (Result<[ToDo], CoreDataError>) -> Void)
 	func addData(title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void)
 	func deleteData(index: Int, completion: @escaping (Result<Void, CoreDataError>) -> Void)
+	func updateData(index: Int, title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void)
 }
 
 class DefaultCoreDataService: CoreDataService {
@@ -77,6 +78,26 @@ class DefaultCoreDataService: CoreDataService {
 				completion(.failure(.saveError))
 			}
 			
+		}
+	}
+	
+	func updateData(index: Int, title: String, completion: @escaping (Result<Void, CoreDataError>) -> Void) {
+		
+		let container = provider.container
+		
+		container.performBackgroundTask { context in
+			
+			let fetchRequest: NSFetchRequest = ToDo.fetchRequest()
+			
+			do {
+				let data = try fetchRequest.execute()
+				data[index].title = title
+				
+				try context.save()
+				completion(.success(()))
+			} catch {
+				completion(.failure(.saveError))
+			}
 		}
 	}
 }
