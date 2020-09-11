@@ -49,7 +49,7 @@ enum Edit {
 	}
 	
 	
-	enum Add {
+	enum Update {
 		struct Request {
 			var title: String
 		}

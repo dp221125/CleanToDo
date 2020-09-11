@@ -13,8 +13,8 @@
 import UIKit
 
 protocol EditBusinessLogic {
-	func showTitle()
-	func update(request: Edit.Add.Request)
+	func showTitle(request: Edit.GetTitle.Request)
+	func update(request: Edit.Update.Request)
 }
 
 protocol EditDataStore {
@@ -42,13 +42,13 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 	var worker: EditWorker?
 	
 	
-	func showTitle() {
+	func showTitle(request: Edit.GetTitle.Request) {
 		let response = Edit.GetTitle.Response(title: defaultText)
 		presenter?.presentTitle(response: response)
 	}
 	
 	
-	func update(request: Edit.Add.Request) {
+	func update(request: Edit.Update.Request) {
 		
 		if let index = self.selectedIndex {
 			self.updateData(index: index, request: request)
@@ -57,12 +57,12 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 		}
 	}
 	
-	func updateData(index: Int, request: Edit.Add.Request) {
+	func updateData(index: Int, request: Edit.Update.Request) {
 		
 		worker?.updateData(index: index, title: request.title) { result in
 			switch result {
 			case .success:
-				self.presenter?.presentDismiss(response: Edit.Add.Response())
+				self.presenter?.presentDismiss(response: Edit.Update.Response())
 			case .failure(let error):
 				self.presenter?.presentErrorAlert(response: Edit.ErrorData.Response(error: error))
 			}
@@ -70,12 +70,12 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 		
 	}
 	
-	func addData(request: Edit.Add.Request) {
+	func addData(request: Edit.Update.Request) {
 		
 		worker?.addData(title: request.title) { result in
 			switch result {
 			case .success:
-				self.presenter?.presentDismiss(response: Edit.Add.Response())
+				self.presenter?.presentDismiss(response: Edit.Update.Response())
 			case .failure(let error):
 				self.presenter?.presentErrorAlert(response: Edit.ErrorData.Response(error: error))
 			}

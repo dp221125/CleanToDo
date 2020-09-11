@@ -15,7 +15,7 @@ import UIKit
 protocol EditDisplayLogic: class {
 	func displayTitle(viewModel: Edit.GetTitle.ViewModel)
 	func displayErrorAlert(viewModel: Edit.ErrorData.ViewModel)
-	func displayDismiss(viewModel: Edit.Add.ViewModel)
+	func displayDismiss(viewModel: Edit.Update.ViewModel)
 }
 
 class EditViewController: BaseViewController {
@@ -51,7 +51,7 @@ class EditViewController: BaseViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.interactor?.showTitle()
+		fetchTitle()
 	}
 	
 	override func configureUI() {
@@ -84,10 +84,15 @@ class EditViewController: BaseViewController {
 		router.dataStore = interactor
 	}
 	
+	private func fetchTitle() {
+		let request = Edit.GetTitle.Request()
+		self.interactor?.showTitle(request: request)
+	}
+	
 	@objc
 	func addToDo() {
 		if let title = self.titleInput.text {
-			let request = Edit.Add.Request(title: title)
+			let request = Edit.Update.Request(title: title)
 			self.interactor?.update(request: request)
 		}
 	}
@@ -105,7 +110,7 @@ extension EditViewController: EditDisplayLogic {
 		self.present(alert, animated: true)
 	}
 	
-	func displayDismiss(viewModel: Edit.Add.ViewModel) {
+	func displayDismiss(viewModel: Edit.Update.ViewModel) {
 		self.router?.routeToMain()
 	}
 
