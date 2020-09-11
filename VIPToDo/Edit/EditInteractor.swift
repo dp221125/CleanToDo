@@ -15,6 +15,7 @@ import UIKit
 protocol EditBusinessLogic {
 	func showTitle(request: Edit.GetTitle.Request)
 	func update(request: Edit.Update.Request)
+	func isVaildData(request: Edit.VaildCheck.Request)
 }
 
 protocol EditDataStore {
@@ -24,7 +25,7 @@ protocol EditDataStore {
 }
 
 class EditInteractor: EditBusinessLogic, EditDataStore {
-	
+
 	var defaultText: String?
 	var selectedIndex: Int?
 	
@@ -81,6 +82,10 @@ class EditInteractor: EditBusinessLogic, EditDataStore {
 			}
 		}
 		
+	}
+	
+	func isVaildData(request: Edit.VaildCheck.Request) {
+		self.presenter?.presentBarButton(response: Edit.VaildCheck.Response(isVaild: !(request.text?.isEmpty ?? true) ))
 	}
 	
 	

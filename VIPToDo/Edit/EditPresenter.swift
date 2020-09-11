@@ -16,6 +16,7 @@ protocol EditPresentationLogic {
 	func presentTitle(response: Edit.GetTitle.Response)
 	func presentErrorAlert(response: Edit.ErrorData.Response)
 	func presentDismiss(response: Edit.Update.Response)
+	func presentBarButton(response: Edit.VaildCheck.Response)
 }
 
 class EditPresenter: EditPresentationLogic {
@@ -39,5 +40,11 @@ class EditPresenter: EditPresentationLogic {
 		
 		let viewModel = Edit.Update.ViewModel()
 		viewController?.displayDismiss(viewModel: viewModel)
+	}
+	
+	func presentBarButton(response: Edit.VaildCheck.Response) {
+		
+		let viewModel = Edit.VaildCheck.ViewModel(displayButton: Edit.VaildCheck.ViewModel.DisplayedBarButton(isVaild: response.isVaild))
+		viewController?.displayBarButton(viewModel: viewModel)
 	}
 }

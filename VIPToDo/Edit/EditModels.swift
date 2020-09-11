@@ -57,4 +57,24 @@ enum Edit {
 		struct ViewModel { }
 	}
 	
+	enum VaildCheck {
+		struct Request {
+			var text: String?
+		}
+		
+		struct Response {
+			var isVaild: Bool
+		}
+		
+		struct ViewModel {
+			
+			struct DisplayedBarButton {
+				var isVaild: Bool
+			}
+			
+			var displayButton: DisplayedBarButton
+		}
+		
+	}
+	
 }

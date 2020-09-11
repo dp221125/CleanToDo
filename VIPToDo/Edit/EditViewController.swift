@@ -16,6 +16,7 @@ protocol EditDisplayLogic: class {
 	func displayTitle(viewModel: Edit.GetTitle.ViewModel)
 	func displayErrorAlert(viewModel: Edit.ErrorData.ViewModel)
 	func displayDismiss(viewModel: Edit.Update.ViewModel)
+	func displayBarButton(viewModel: Edit.VaildCheck.ViewModel)
 }
 
 class EditViewController: BaseViewController {
@@ -36,12 +37,12 @@ class EditViewController: BaseViewController {
 		textField.textColor = .label
 		textField.layer.borderColor = UIColor.black.cgColor
 		textField.translatesAutoresizingMaskIntoConstraints = false
+		textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
 		return textField
 	}()
 	
 	override init() {
 		super.init()
-		self.navigationItem.rightBarButtonItem = self.doneButtonItem
 		setup()
 	}
 	
@@ -97,8 +98,22 @@ class EditViewController: BaseViewController {
 		}
 	}
 	
+	@objc
+	func textFieldDidChange(_ sender: UITextField) {
+		let request = Edit.VaildCheck.Request(text: sender.text?.trimmingCharacters(in: .whitespaces))
+		self.interactor?.isVaildData(request: request)
+	}
+	
 }
 extension EditViewController: EditDisplayLogic {
+	
+	func displayBarButton(viewModel: Edit.VaildCheck.ViewModel) {
+		if viewModel.displayButton.isVaild {
+			self.navigationItem.rightBarButtonItem = self.doneButtonItem
+		} else {
+			self.navigationItem.rightBarButtonItem = nil
+		}
+	}
 	
 	func displayErrorAlert(viewModel: Edit.ErrorData.ViewModel) {
 		let alert = UIAlertController(title: "Error",
@@ -119,8 +134,10 @@ extension EditViewController: EditDisplayLogic {
 		if let title = viewModel.disPlayTitle.title {
 			self.title = "Edit"
 			self.titleInput.text = title
+			self.navigationItem.rightBarButtonItem = self.doneButtonItem
 		} else {
 			self.title = "Add"
+			self.navigationItem.rightBarButtonItem = nil
 		}
 		
 	}
